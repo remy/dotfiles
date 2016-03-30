@@ -1,9 +1,3 @@
-# Setup Amazon EC2 Command-Line Tools
-export EC2_HOME=$HOME/.ec2
-export EC2_PRIVATE_KEY=`ls $EC2_HOME/pk-*.pem`
-export EC2_CERT=`ls $EC2_HOME/cert-*.pem`
-export PATH=$PATH:$EC2_HOME/bin
-
 export GOPATH=$HOME/gocode
 
 # docker stuff

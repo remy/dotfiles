@@ -127,6 +127,9 @@ brew install watch
 # install zsh and add remy's zsh theme: https://remysharp.com/2013/07/25/my-terminal-setup
 brew install zsh zsh-completions
 curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+# put the original .zshrc back
+mv .zshrc.pre-oh-my-zsh .zshrc
+# make zsh default
 chsh -s /bin/zsh
 
 # Remove outdated versions from the cellar.

@@ -2,6 +2,10 @@
 
 ![Screenshot of my shell prompt](https://cldup.com/Q4Z5Vek_XD.png)
 
+## ⚠ WARNING ⚠
+
+These dotfiles still need work to complete an automatic installation. Use at your own risk (I do...).
+
 ## Installation
 
 **Warning:** If you want to give these dotfiles a try, you should first fork this repository, review the code, and remove things you don’t want or need. Don’t blindly use my settings unless you know what that entails. Use at your own risk!
