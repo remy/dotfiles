@@ -1,0 +1,76 @@
+{
+	"added_words":
+	[
+		"admin",
+		"Google",
+		"Google's",
+		"phishing",
+		"phish",
+		"remediation",
+		"remediated",
+		"snyk",
+		"npm",
+		"nodejs",
+		"auth",
+		"workflow",
+		"transpiles",
+		"transpile",
+		"transpiler",
+		"devtools",
+		"savvy",
+		"screenshot",
+		"fullscreen",
+		"hotkey",
+		"uncheck",
+		"app",
+		"shortcut",
+		"online",
+		"blogs",
+		"Photoshop",
+		"filename",
+		"timestamp",
+		"shortcuts"
+	],
+	"color_scheme": "Packages/User/SublimeLinter/cobalt2 (SL).tmTheme",
+	"dictionary": "Packages/Language - English/en_GB.dic",
+	"file_exclude_patterns":
+	[
+		"*.map",
+		".DS_Store"
+	],
+	"folder_exclude_patterns":
+	[
+		".nyc_output",
+		"node_modules",
+		"bower_components",
+		"coverage",
+		"public/js/prod",
+		"vendor",
+		"www",
+		".sass-cache",
+		".git"
+	],
+	"font_face": "Menlo for Powerline",
+	"font_options":
+	[
+		"gray_antialias"
+	],
+	"font_size": 15,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+	],
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
+	"rulers":
+	[
+		80
+	],
+	"tab_size": 2,
+	"theme": "Cobalt2.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"use_tab_stops": false,
+	"vintage_start_in_command_mode": false,
+	"word_wrap": true
+}

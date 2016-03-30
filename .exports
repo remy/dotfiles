@@ -1,0 +1,19 @@
+# Setup Amazon EC2 Command-Line Tools
+export EC2_HOME=$HOME/.ec2
+export EC2_PRIVATE_KEY=`ls $EC2_HOME/pk-*.pem`
+export EC2_CERT=`ls $EC2_HOME/cert-*.pem`
+export PATH=$PATH:$EC2_HOME/bin
+
+export GOPATH=$HOME/gocode
+
+# docker stuff
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+
+# lolcommits stuff :-\
+export LOLCOMMITS_DELAY=1

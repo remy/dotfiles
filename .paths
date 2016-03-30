@@ -1,0 +1,20 @@
+/opt/local/include
+/opt/local/bin
+/opt/local/sbin
+$HOME/android-sdk-macosx/platform-tools
+$HOME/bin
+/usr/local/mysql/bin
+/usr/local/share/npm/bin
+/usr/local/sbin
+/usr/local/bin
+/usr/bin
+/bin
+/usr/sbin
+/sbin
+/usr/X11/bin
+$HOME/android-sdk/platform-tools
+/Applications/VirtualBox.app/Contents/MacOS/
+/Applications/Postgres.app/Contents/Versions/9.4/bin
+### Added by the Heroku Toolbelt
+/usr/local/heroku/bin
+$HOME/.rvm/bin # Add RVM to PATH for scripting
