@@ -141,7 +141,7 @@ function server() {
 # (Requires PHP 5.4.0+.)
 function phpserver() {
   local port="${1:-4000}";
-  local ip=$(ipconfig getifaddr en1);
+  local ip=$(ipconfig getifaddr en0);
   sleep 1 && open "http://${ip}:${port}/" &
   php -S "${ip}:${port}";
 }
@@ -240,6 +240,10 @@ function tre() {
   tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+function dnode() {
+  DEBUG=* node $@ > /dev/null
+}
+
 base64() {
   openssl base64 < "$1" | tr -d '\n' | pbcopy
 }
@@ -264,14 +268,25 @@ gififyalt() {
 # fi;
 
 # detect a local tap and use that if available, otherwise use the global
-# installed one (via npm i -g tap)
+# installed one (via npm i -g tap) and run it through babel
 tap() {
   local TAP="tap"
   if [ -e $PWD/node_modules/.bin/tap ]; then
     local TAP="$PWD/node_modules/.bin/tap"
   fi
 
-  $TAP $@
+  node -v | awk -F[.v] '{print $2 }' | { read test; test $test -gt 3; }
+
+  if [ $? -eq 0 ]; then
+    $TAP $@
+  else
+    babel-node $TAP $@
+  fi
+
+}
+
+function npm-downloads() {
+  curl -s https://api.npmjs.org/downloads/point/last-week/$@ | command json downloads
 }
 
 # copy() {
@@ -282,3 +297,9 @@ tap() {
 #   fi
 #   pbpaste
 # }
+
+# I'm going to lose the original `split` command, but frankly, I never
+# use it (last I recall was 2007...)
+function split() {
+  tr '$@' '\n' < /dev/stdin
+}

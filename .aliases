@@ -16,6 +16,7 @@ alias gs="git status -s"
 alias gp="git push origin HEAD"
 alias gpt="git push origin HEAD && git push --tags"
 alias wip="git commit -m'WIP' . && git push origin HEAD"
+
 alias m="memcached -d -m 24 -p 11211"
 
 # pebble
@@ -82,10 +83,6 @@ alias trimcopy="tr -d '\n' | pbcopy"
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 
-# Shortcuts
-alias g="git"
-alias v="vim"
-
 # Empty the Trash on all mounted volumes and the main HDD
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
 
@@ -99,7 +96,7 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 done
 
 alias paste=pbpaste
-# it's useful to see what I've just copied
+# it's useful to see what I've just copied, ie. `cat foo | copy`
 alias copy='pbcopy; pbpaste'
 
 alias path='echo -e ${PATH//:/\\n}'
@@ -123,3 +120,6 @@ alias snyk-post='gzip | curl -s -X POST https://snyk.io/api/vuln/npm -H "content
 
 # shows the top 5 processes by cpu usage
 alias top5="ps auxww | sort -rnk 3,3 | head -n 5 | awk '{ print \$3\" (\" \$2 \") \" \$11 }'"
+
+# data science helpers
+alias csv-header="csvcut -n"

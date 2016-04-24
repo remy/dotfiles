@@ -17,3 +17,4 @@ npm install -g grunt-cli # because I have to for some projects
 npm install -g live-server systemjs jspm # one day I'll do esnext...
 npm install -g peerflix # for testing torrents
 npm install -g depcheck # finding unused deps
+npm install -g babel-cli

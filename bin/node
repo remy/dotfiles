@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -z "$npm_package_engines_node" ]; then
+  $_NODE $@
+else
+  source $HOME/.nvm/nvm.sh --no-use
+  nvm exec $npm_package_engines_node node $@
+fi

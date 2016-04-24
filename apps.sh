@@ -96,6 +96,9 @@ brew install ucspi-tcp # `tcpserver` etc.
 brew install xpdf
 brew install xz
 
+# quickview stuff
+brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook suspicious-package
+
 # Install other useful binaries.
 brew install ack
 brew install dark-mode
@@ -123,6 +126,11 @@ brew install memcached
 brew install mongodb
 brew install pstree
 brew install watch
+
+# data science
+brew install jq
+sudo pip install csvkit
+
 
 # install zsh and add remy's zsh theme: https://remysharp.com/2013/07/25/my-terminal-setup
 brew install zsh zsh-completions

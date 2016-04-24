@@ -50,7 +50,7 @@ source $HOME/.exports
 export PATH=$PATH:$(eval echo $(cat $HOME/.paths | sed 's:#.*$::g' | sed '/^\s*$/d' | sed -e :a -e '$!N; s/\n/:/; ta'))
 
 # .extra contains private keys and isn't included in this repo
-for source in .extra .aliases .functions .nvm/nvm.sh .travis/travis.sh; do
+for source in .zshenv .extra .aliases .functions .travis/travis.sh; do
   [ -f $HOME/$source ] && source $HOME/$source;
 done
 
