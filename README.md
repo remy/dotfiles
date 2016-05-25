@@ -1,10 +1,12 @@
-# Remy's dotfiles
+# Remy's (mac) dotfiles
 
 ![Screenshot of my shell prompt](https://cldup.com/Q4Z5Vek_XD.png)
 
 ## ⚠ WARNING ⚠
 
 These dotfiles still need work to complete an automatic installation. Use at your own risk (I do...).
+
+I'm also using these on a Mac (and have tried with varying degrees of success on linux), so your milage may vary...
 
 ## Installation
 
