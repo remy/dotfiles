@@ -1,0 +1,154 @@
+" You can enable the existing layers in space-vim and
+" exclude the partial plugins in a certain layer.
+" The command Layer is vaild in the function Layers().
+" Use exclude option if you don't want the full Layer,
+" e.g., Layer 'better-defaults', { 'exclude': 'itchyny/vim-cursorword' }
+function! Layers()
+
+    " Default layers, recommended!
+    Layer 'fzf'
+    Layer 'unite'
+    Layer 'better-defaults'
+    Layer 'auto-completion'
+    Layer 'emoji'
+    Layer 'airline'
+    Layer 'goyo' " <space> g y - to toggle distraction free!
+
+endfunction
+
+" Put your private plugins here.
+function! UserInit()
+
+    " Space has been set as the default leader key,
+    " if you want to change it, uncomment and set it here.
+    " let g:spacevim_leader = "<\Space>"
+    " let g:spacevim_localleader = ','
+
+    " Install private plugins
+    " Plug 'extr0py/oni'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'tpope/vim-fugitive'
+    Plug 'rakr/vim-one'
+    Plug 'mileszs/ack.vim'
+    Plug 'vim-syntastic/syntastic'
+    Plug 'chriskempson/base16-vim'
+    " Plug 'rakr/vim-togglebg'
+    " Plug 'ervandew/supertab'
+
+endfunction
+
+" Put your costom configurations here, e.g., change the colorscheme.
+function! UserConfig()
+
+    if (has("termguicolors"))
+      set termguicolors
+    endif
+
+    " set background=light
+    " set background=dark
+    " colorscheme one
+    " toggle and reload the color scheme on F5
+    " let s:mybg = "dark"
+    "| map <F5> :call BgToggleSol()<CR>
+
+    " linting configuration
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_javascript_checkers = ['eslint']
+    let g:syntastic_javascript_eslint_exe = 'eslint --fix'
+    let g:syntastic_always_populate_loc_list = 0
+    let g:syntastic_auto_loc_list = 0
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+
+    " always assume I'll be pasting
+    " set paste
+
+    " Useful settings
+    set scrolloff=3
+
+    " .md == markdown
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+    " always spellcheck markdown and gitcommit
+    autocmd BufRead,BufNewFile *.md setlocal spell
+    autocmd FileType gitcommit setlocal spell
+
+    " map `/` to search
+    " map / :/
+
+    " map <Tab> to completion ^P
+    imap <Tab> <C-P>
+
+    " Treat long lines as break lines (useful when moving around in them)
+    set wrap
+    nnoremap <Down> gj
+    nnoremap <Up> gk
+    vnoremap <Down> gj
+    vnoremap <Up> gk
+    inoremap <Down> <C-o>gj
+    inoremap <Up> <C-o>gk
+
+    " Useful mappings
+    nnoremap G Gzz
+
+    " keep swap files, but leave them in /tmp
+    set swapfile
+    set bdir=$TMPDIR
+    set dir=$TMPDIR
+    set undodir=$TMPDIR
+    set nowritebackup
+
+    " 2 spaces
+    filetype plugin indent on
+    " show existing tab with 4 spaces width
+    set tabstop=2
+    " when indenting with '>', use 4 spaces width
+    set shiftwidth=2
+    " On pressing tab, insert 4 spaces
+    set expandtab
+
+    " If you enable airline layer and have installed the powerline fonts,
+    " set it here.
+    let g:airline_powerline_fonts=1
+    let g:airline_theme='one'
+
+    " Show file options above the command line
+    set wildmenu
+
+    " narrow nerdtree
+    let g:NERDTreeWinSize = 30
+    let g:NERDTreeWinPos = "right" " open with F4
+    let g:NERDTreeIgnore = ['\.next$', '\.git$', '.DS_Store', 'node_modules$']
+
+    " change insert cursor in Hyper (copied from iterm style):
+    if $TERM_PROGRAM =~# 'Hyper'
+      let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+      let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+      let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    endif
+
+
+    " Set the working directory to wherever the open file lives
+"    set autochdir
+
+    " Don't offer to open certain files/directories
+    set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
+    set wildignore+=*.pdf,*.psd
+    set wildignore+=node_modules/*,bower_components/*,.next/*
+endfunction
+
+" Initially set it to "dark" or "light" according to your default
+function! BgToggleSol()
+    if (s:mybg ==? "light")
+       set background=dark
+       let s:mybg = "dark"
+    else
+       set background=light
+       let s:mybg = "light"
+    endif
+    " set background=light
+    colorscheme one
+endfunction
+

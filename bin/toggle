@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ $DARK = "true" ]]; then
+  echo "light theme"
+  export DARK="false"
+else
+  echo "dark theme"
+  export DARK="true"
+fi
+
+source ~/.oh-my-zsh/themes/remy.zsh-theme

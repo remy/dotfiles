@@ -1,8 +1,10 @@
+/usr/local/opt/curl/bin
 /opt/local/include
 /opt/local/bin
 /opt/local/sbin
 $HOME/android-sdk-macosx/platform-tools
 $HOME/bin
+$HOME/go/bin
 /usr/local/mysql/bin
 /usr/local/share/npm/bin
 /usr/local/sbin
@@ -13,8 +15,10 @@ $HOME/bin
 /sbin
 /usr/X11/bin
 $HOME/android-sdk/platform-tools
+$HOME/esp/xtensa-esp32-elf/bin
 /Applications/VirtualBox.app/Contents/MacOS/
 /Applications/Postgres.app/Contents/Versions/9.4/bin
 ### Added by the Heroku Toolbelt
 /usr/local/heroku/bin
 $HOME/.rvm/bin # Add RVM to PATH for scripting
+$HOME/bin/gcc-arm/bin

@@ -57,6 +57,34 @@ brew install gnu-sed --with-default-names
 brew tap homebrew/versions
 #brew install bash-completion2
 
+
+# rem specific stuff, and yeah, ponysay is important.
+brew install ponysay
+brew install ripgrep
+brew install diff-so-fancy
+brew install httpie
+brew install memcached
+brew install mongodb
+brew install pstree
+brew install watch
+brew install prettyping
+brew install tldr
+brew install bat
+brew install fzf
+brew install htop
+brew install fd
+brew install jq
+brew install ack
+brew install the_silver_searcher
+brew install moreutils
+sudo pip install csvkit # not really brew, but … meh
+brew install noti
+brew install entr
+
+
+## now here be the stuff I copied and, if I'm honest, not 100% sure about!
+
+
 # Install `wget` with IRI support.
 brew install wget --with-iri
 
@@ -101,8 +129,6 @@ brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch 
 
 # Install other useful binaries.
 brew install ack
-brew install dark-mode
-#brew install exiv2
 brew install git
 brew install git-lfs
 brew install imagemagick --with-webp
@@ -117,19 +143,6 @@ brew install ssh-copy-id
 brew install tree
 brew install webkit2png
 brew install zopfli
-
-# rem specific stuff, and yeah, ponysay is important.
-brew install ponysay
-brew install diff-so-fancy
-brew install httpie
-brew install memcached
-brew install mongodb
-brew install pstree
-brew install watch
-
-# data science
-brew install jq
-sudo pip install csvkit
 
 
 # install zsh and add remy's zsh theme: https://remysharp.com/2013/07/25/my-terminal-setup

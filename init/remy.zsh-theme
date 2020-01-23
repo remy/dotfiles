@@ -29,8 +29,8 @@ CURRENT_BG='NONE'
 # SEGMENT_SEPARATOR=''
 SEGMENT_SEPARATOR='⮀'
 
-icon_online='%{%F{green}%}●' # ◉
-icon_offline='%{%F{red}%}●' # ⦿
+icon_online='%{%F{green}%}' # ●◉
+icon_offline='%{%F{red}%}' # ●⦿
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
@@ -40,7 +40,7 @@ prompt_segment() {
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    echo -n "%{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
   else
     echo -n "%{$bg%}%{$fg%} "
   fi
@@ -98,7 +98,11 @@ function prompt_online() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue black '%~'
+  if [[ $DARK = 'false' ]]; then
+    prompt_segment green white '%~'
+  else
+    prompt_segment blue black '%~'
+  fi
 }
 
 # Status:

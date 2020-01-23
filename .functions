@@ -1,3 +1,15 @@
+# trims the output a single line
+function single() {
+  while read line; do echo -e "\033[1000D\033[K\033[32m$$\033[0m $line" | tr -d '\r\n'; done
+}
+
+function zeit() {
+  now alias ls | grep $1 | awk '{ gsub(/.now.sh$/,"",$1); gsub(/-/, "/", $1); print "https://zeit.co/rem/"$1"/logs?all=1" }' | xargs open
+}
+
+function sha256sum() { openssl sha256 "$@" | awk '{print $2}'; }
+
+
 # Create a new directory and enter it
 function mkd() {
   mkdir -p "$@" && cd "$_";
@@ -23,7 +35,7 @@ if [ $? -eq 0 ]; then
   function gist() {
     if [ -t 0 ]; then
       if ((! $# )); then
-        command gist -Pcop -f paste.txt | gitio
+        command gist -Pcop -f paste.md | gitio
       else
         command gist -cop $@ | gitio
       fi
@@ -47,6 +59,18 @@ function gitio() {
 
   curl -s -L -q -i https://git.io/ -F "url=${url}" | grep Location | cut -d' ' -f2 | pbcopy; # generate url and copy to clipboard
   pbpaste # echo
+}
+
+function put() {
+  if [ -t 0 ]; then
+    curl -i -X POST -H "authorization: token $JSONBIN_API_KEY" https://jsonbin.org/clip -F "f=@$@" > /dev/null
+  else
+    curl -X POST -H "authorization: token $JSONBIN_API_KEY" https://jsonbin.org/clip -F "f=@-" < /dev/stdin > /dev/null
+  fi
+}
+
+function get() {
+  curl -X GET -H "authorization: token $JSONBIN_API_KEY" https://jsonbin.org/clip
 }
 
 # lets my run `less http...` using lynx to scrape the text content
@@ -158,13 +182,16 @@ function gz() {
 # Syntax-highlight JSON strings or files
 # Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
 # uses the npmjs.com/json package
+hash git &>/dev/null;
+if [ $? -eq 0 ]; then
 function json() {
   if [ -t 0 ]; then # argument
-    command json "$*" | pygmentize -l javascript;
+    command json $@ | ccat
   else # pipe
-    command json $@ < /dev/stdin | pygmentize -l javascript;
+    command json $@ < /dev/stdin | ccat
   fi;
 }
+fi;
 
 # Run `dig` and display the most useful info
 function digga() {
@@ -237,7 +264,12 @@ function getcertnames() {
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
 function tre() {
-  tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+  tree -aC -I '.git|.cache|.bit|.next|.vscode|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+}
+
+function tap() {
+  filename=$(basename $@)
+  zxtap2wav -a -f 44100 -i $@ -o "$filename.wav"
 }
 
 function dnode() {
@@ -245,7 +277,11 @@ function dnode() {
 }
 
 base64() {
-  openssl base64 < "$1" | tr -d '\n' | pbcopy
+  if [[ -e "$1" ]]; then
+    openssl base64 < "$1" | tr -d '\n' | copy
+  else
+    echo "$1" | command base64
+  fi
 }
 
 gififyalt() {
@@ -262,44 +298,75 @@ gififyalt() {
   fi
 }
 
-# hash watch &>/dev/null;
-# if [ $? -eq 0 ]; then
-#   while true; do onlinecheck; echo $OFFLINE; sleep 5; done
-# fi;
-
 # detect a local tap and use that if available, otherwise use the global
 # installed one (via npm i -g tap) and run it through babel
-tap() {
-  local TAP="tap"
-  if [ -e $PWD/node_modules/.bin/tap ]; then
-    local TAP="$PWD/node_modules/.bin/tap"
-  fi
+hash tap &>/dev/null;
+if [ $? -eq 0 ]; then
+  tap() {
+    # get the real location of tap
+    local TAP=$(type -p tap | awk '{ print $3 }')
 
-  node -v | awk -F[.v] '{print $2 }' | { read test; test $test -gt 3; }
+    # if there's a local one in reach then use that instead
+    if [ -e $PWD/node_modules/.bin/tap ]; then
+      local TAP="$PWD/node_modules/.bin/tap"
+    fi
 
-  if [ $? -eq 0 ]; then
-    $TAP $@
-  else
-    babel-node $TAP $@
-  fi
+    # check if we're node 4 or above, if we are, then assume
+    # that it can run _some_ ES6
+    node -v | awk -F[.v] '{print $2 }' | { read test; test $test -gt 3; }
 
-}
+    # if node.version > 3
+    if [ $? -eq 0 ]; then
+      $TAP $@
+    else
+      # else reach for babel
+      babel-node $TAP $@
+    fi
+  }
+fi;
 
 function npm-downloads() {
-  curl -s https://api.npmjs.org/downloads/point/last-week/$@ | command json downloads
+  curl -s https://api.npmjs.org/downloads/point/last-week/$@ | jq .downloads
 }
 
-# copy() {
-#   if [ -t 0 ]; then
-#     cat $@ | pbcopy
-#   else
-
-#   fi
-#   pbpaste
-# }
+copy() {
+  if [ -t 0 ]; then
+    cat $@ | pbcopy
+  else
+    pbcopy < /dev/stdin
+  fi
+}
 
 # I'm going to lose the original `split` command, but frankly, I never
 # use it (last I recall was 2007...)
 function split() {
   tr '$@' '\n' < /dev/stdin
+}
+
+# grep for a specific term in the running processes
+function greps() {
+  # ps auxww | grep [t]erm
+  ps auxww | grep $(echo $1 | perl -n -e's/^(.)(.*)$/[$1]$2/; print $_')
+}
+
+function shrink() {
+  # first upload and compress the filename argument
+  local OUTPUT=$(curl https://api.tinify.com/shrink \
+    --user api:$TINIFY_KEY \
+    --data-binary @$1
+  )
+
+  local URL=$(echo $OUTPUT | jq .output.url -r)
+
+  local RESULT=$(echo $OUTPUT | jq -r '. + { compression: ((1 - .output.ratio) * 100 | floor) } | "Before: \(.input.size / 1000 | floor)Kb, after \(.output.size / 1000 | floor)Kb, saving \(.compression)%"')
+
+  # then download and overwrite the file with the newly shrunk file
+  curl -X POST $URL --user api:$TINIFY_KEY --output $1 -H 'content-type: application/json' -d'{"resize":{"method":"scale","width":1320}}'
+  echo "\033[1m$RESULT\033[0m";
+}
+
+function _shrink() {
+  local URL=$(curl https://api.tinify.com/shrink --progress-bar --user api:$TINIFY_KEY --dump-header /dev/stdout --data-binary @$1 | awk '/Location/ { gsub(/[[:space:]]+$/, ""); printf $2 }')
+
+  curl -X POST $URL --user api:$TINIFY_KEY --dump-header /dev/stdout --output $1 -H 'content-type: application/json' -d'{"resize":{"method":"scale","width":1320}}'
 }

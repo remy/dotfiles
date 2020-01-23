@@ -1,4 +1,7 @@
-# Mostly pinched from Paul Irish's dotfiles way back when...
+hash gc &>/dev/null;
+if [ $? -eq 0 ]; then
+  #unalias gc # lets me us graphcool's shortcut instead of git
+fi
 
 # Easier navigation: .., ...
 alias ..="cd .."
@@ -9,7 +12,6 @@ alias -- -="cd -"
 
 alias clone='nocorrect clone '
 alias cordova='nocorrect cordova '
-
 
 # git
 alias gs="git status -s"
@@ -24,9 +26,10 @@ alias pebble-both="pebble build ; pebble install --emulator basalt; pebble insta
 
 alias dockit=". '/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh'"
 
-alias pr='f() { git fetch origin && git checkout pr/"$1" && npm install; }; f'
-
 alias hosts='sudo vi /etc/hosts'
+
+# flush Directory Service cache
+alias flush="dscacheutil -flushcache"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -41,17 +44,21 @@ alias l="ls -l ${colorflag}"
 # List all files colorized in long format, including dot files
 alias la="ls -la ${colorflag}"
 
-
 # List only directories
 alias lsd='ls -l | grep "^d"'
 
 # Always use color output for `ls`
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-  alias ls="command ls -G"
+#  alias ls="command ls -G"
 else
   alias ls="command ls --color"
   export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:'
 fi
+
+function ls() {
+  command ls -Gl "$@" | node /Users/remy/Sites/nice-ls index.js
+}
+
 
 # `cat` with beautiful colors. requires Pygments installed.
 #                  sudo easy_install Pygments
@@ -69,9 +76,6 @@ alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 
 # Enhanced WHOIS lookups
 alias whois="whois -h whois-servers.net"
-
-# Flush Directory Service cache
-alias flush="dscacheutil -flushcache"
 
 # View HTTP traffic
 alias sniff="sudo ngrep -W byline -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
@@ -95,14 +99,19 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "$method"="lwp-request -m '$method'"
 done
 
+### So begins Remy's cusomisations
+
 alias paste=pbpaste
 # it's useful to see what I've just copied, ie. `cat foo | copy`
-alias copy='pbcopy; pbpaste'
+# alias copy='pbcopy; pbpaste'
 
 alias path='echo -e ${PATH//:/\\n}'
 
 # resume wget by default
 alias wget='wget -c'
+
+# hide progress (silent) on curl by default
+alias curl='curl -s'
 
 # get raw url from a gist (expected use: curl <gist> | gitraw)
 alias gitraw="grep Location | tr -d '\r\n' | awk '{print \$2\"/raw\"}'"
@@ -113,13 +122,40 @@ alias hidden='ls -trFa | grep "^\."'
 # reload the shell
 alias reload='exec $SHELL -l'
 
-alias config='st ~/.zshrc'
-
 # snyk helpers (pipe-to command)
 alias snyk-post='gzip | curl -s -X POST https://snyk.io/api/vuln/npm -H "content-type: application/json" -H "content-encoding: gzip" --data-binary @-'
 
+alias pip=pip3
+
 # shows the top 5 processes by cpu usage
 alias top5="ps auxww | sort -rnk 3,3 | head -n 5 | awk '{ print \$3\" (\" \$2 \") \" \$11 }'"
+alias killtop="ps auxww | sort -rnk 3,3 | head -n 1 | awk '{ print \$2 }' | xargs kill -9"
 
 # data science helpers
 alias csv-header="csvcut -n"
+
+alias dokku='$HOME/.dokku/contrib/dokku_client.sh'
+
+alias help="tldr"
+alias ping='prettyping --nolegend'
+
+alias vi='vim' # so that I never get into the whole vim != vi!!!
+alias cat='bat'
+alias nnn='nnn -S'
+
+alias perf='curl --compress -w "@$HOME/.curl-format.txt" -o /dev/null -s '
+
+alias chrome="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
+
+alias preview="fzf --preview 'bat --color \"always\" {}'"
+
+alias htop="sudo htop" # attempt to fix a high sierra bug
+alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+alias grep="rg"
+
+alias light="base16_atelier-forest-light"
+alias dark="base16_onedark"
+
+alias backup="NODE_ENV=production envy -- mongodump --uri \\\$MONGO_URL"
+alias r="command r"
+alias tx=tmuxinator

@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+  
+require 'tty-markdown'
+  
+puts TTY::Markdown.parse(ARGF.read, colors: 256)
