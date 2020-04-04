@@ -193,3 +193,9 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+[user]
+	name = Remy Sharp
+	email = remy@remysharp.com
+[github]
+	name = remy
+	user = remy
