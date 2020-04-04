@@ -1,3 +1,8 @@
+# hex/binary diff
+function xdiff() {
+  /usr/bin/diff -u <(xxd -c 32 $1) <(xxd -c 32 $2) | diff-so-fancy
+}
+
 # trims the output a single line
 function single() {
   while read line; do echo -e "\033[1000D\033[K\033[32m$$\033[0m $line" | tr -d '\r\n'; done
@@ -178,20 +183,6 @@ function gz() {
   printf "orig: %d bytes\n" "$origsize";
   printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio";
 }
-
-# Syntax-highlight JSON strings or files
-# Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
-# uses the npmjs.com/json package
-hash git &>/dev/null;
-if [ $? -eq 0 ]; then
-function json() {
-  if [ -t 0 ]; then # argument
-    command json $@ | ccat
-  else # pipe
-    command json $@ < /dev/stdin | ccat
-  fi;
-}
-fi;
 
 # Run `dig` and display the most useful info
 function digga() {

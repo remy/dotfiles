@@ -2,6 +2,7 @@
 /opt/local/include
 /opt/local/bin
 /opt/local/sbin
+$HOME/google-cloud-sdk/bin
 $HOME/android-sdk-macosx/platform-tools
 $HOME/bin
 $HOME/go/bin
@@ -17,8 +18,10 @@ $HOME/go/bin
 $HOME/android-sdk/platform-tools
 $HOME/esp/xtensa-esp32-elf/bin
 /Applications/VirtualBox.app/Contents/MacOS/
+/Applications/Muse/
 /Applications/Postgres.app/Contents/Versions/9.4/bin
 ### Added by the Heroku Toolbelt
 /usr/local/heroku/bin
 $HOME/.rvm/bin # Add RVM to PATH for scripting
 $HOME/bin/gcc-arm/bin
+$HOME/.local/bin

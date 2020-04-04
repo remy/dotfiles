@@ -1,20 +1,6 @@
-export GOPATH=$HOME/gocode
-
-# docker stuff
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
-
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
-
 # lolcommits stuff :-\
 export LOLCOMMITS_DELAY=1
 
-
-##
-## gotta tune that bash_history… via
 ##
 ## gotta tune that bash_history…
 ##
@@ -24,7 +10,10 @@ export HISTTIMEFORMAT='%F %T '
 
 # keep history up to date, across sessions, in realtime
 #  http://unix.stackexchange.com/a/48113
-export HISTCONTROL=ignoredups:erasedups         # no duplicate entries
+#   - ignorespace = don't save lines that begin with a space
+#   - ignoredups  = don't save duplicate lines
+#   - erasedups   = erase across sessions
+export HISTCONTROL=ignorespace:ignoredups:erasedups
 export HISTSIZE=100000                          # big big history (default is 500)
 export HISTFILESIZE=$HISTSIZE                   # big big history
 which shopt > /dev/null && shopt -s histappend  # append to history, don't overwrite it
@@ -33,19 +22,30 @@ which shopt > /dev/null && shopt -s histappend  # append to history, don't overw
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # ^ the only downside with this is [up] on the readline will go over all history not just this bash session.
-##
 
-# timestamps for later analysis. www.debian-administration.org/users/rossen/weblog/1
-export HISTTIMEFORMAT='%F %T '
+export EDITOR="vim"
 
-# keep history up to date, across sessions, in realtime
-#  http://unix.stackexchange.com/a/48113
-export HISTCONTROL=ignoredups:erasedups         # no duplicate entries
-export HISTSIZE=100000                          # big big history (default is 500)
-export HISTFILESIZE=$HISTSIZE                   # big big history
-which shopt > /dev/null && shopt -s histappend  # append to history, don't overwrite it
+# autoload nvm
+export NVM_AUTO_USE=true
+export NVM_LAZY_LOAD=true
 
-# Save and reload the history after each command finishes
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+export GOPATH=$HOME/go
 
-# ^ the only downside with this is [up] on the readline will go over all history not just this bash session.
+export FIGNORE="*-lock.json"
+
+export IDF_PATH=~/esp/esp-idf
+
+# android dev (for the single android app I wrote!)
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/emulator
+
+export TTC_SAY_BOX=parrot #$HOME/dotfiles/pony.ansi
+export TTC_REPOS=$HOME/Sites,$HOME/Sites/deck,$HOME/Sites/worldwideweb
+export TTC_WEATHER='BN1 7HT'
+export TTC_APIKEYS=false
+
+export VAGRANT_DISABLE_VBOXSYMLINKCREAT=1
+export PUBSUB_EMULATOR_HOST=localhost:8085
