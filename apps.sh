@@ -144,6 +144,12 @@ brew install tree
 brew install webkit2png
 brew install zopfli
 
+# eeprom programmer
+brew install minipro
+
+# samsung screen control
+brew cask install monitorcontrol
+
 
 # install zsh and add remy's zsh theme: https://remysharp.com/2013/07/25/my-terminal-setup
 brew install zsh zsh-completions
