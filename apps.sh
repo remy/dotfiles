@@ -125,7 +125,7 @@ brew install xpdf
 brew install xz
 
 # quickview stuff
-brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook suspicious-package
+brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv qlimagesize webpquicklook suspicious-package
 
 # Install other useful binaries.
 brew install ack

@@ -361,3 +361,40 @@ function _shrink() {
 
   curl -X POST $URL --user api:$TINIFY_KEY --dump-header /dev/stdout --output $1 -H 'content-type: application/json' -d'{"resize":{"method":"scale","width":1320}}'
 }
+
+function zxput() {
+  hdfmonkey put /Applications/cspect/app/cspect-next-2gb.img "$1" "${2:-/devel}/$1"
+}
+
+function zxget() {
+  hdfmonkey get /Applications/cspect/app/cspect-next-2gb.img "$1" "${2:-./$(basename $1)}"
+}
+
+function zxls() {
+  hdfmonkey ls /Applications/cspect/app/cspect-next-2gb.img "${1:-/devel}"
+}
+
+function zxrm() {
+  local FILENAME="$1"
+  if [ "$FILENAME" = "$(basename "$1")" ]; then
+    FILENAME="/devel/$1"
+  fi
+  echo hdfmonkey rm /Applications/cspect/app/cspect-next-2gb.img "$FILENAME"
+  hdfmonkey rm /Applications/cspect/app/cspect-next-2gb.img "$FILENAME"
+}
+
+function zxrmdir() {
+  # set -x
+  local DIR="$1"
+  local FILES
+  FILES=$(zxls $DIR)
+  if [ $? -ne 0 ] ; then
+    echo $FILES
+    return 1;
+  fi
+
+  echo $FILES | awk -v q='"' -v d="$DIR/" '{ $1=""; gsub(/^ /, "", $0); print d $0 }' | while read line; do
+    zxrm $line || break
+  done
+  set +x
+}

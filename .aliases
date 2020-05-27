@@ -56,7 +56,7 @@ else
 fi
 
 function ls(){
-  command ls -G "$@" | node /Users/remy/Sites/nice-ls index.js
+  command ls -G "$@" | node /Users/remy/dev/nice-ls index.js
 }
 
 
@@ -111,7 +111,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias wget='wget -c'
 
 # hide progress (silent) on curl by default
-alias curl='curl -s'
+alias curl='curl -S -s'
 
 # get raw url from a gist (expected use: curl <gist> | gitraw)
 alias gitraw="grep Location | tr -d '\r\n' | awk '{print \$2\"/raw\"}'"
