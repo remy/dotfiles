@@ -161,3 +161,4 @@ alias clear='[ $[$RANDOM % 10] = 0 ] && timeout 3 cmatrix; clear || clear'
 alias backup="NODE_ENV=production envy -- mongodump --uri \\\$MONGO_URL"
 alias r="command r"
 alias tx=tmuxinator
+alias now=vercel

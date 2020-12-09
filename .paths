@@ -5,6 +5,7 @@
 $HOME/google-cloud-sdk/bin
 $HOME/android-sdk-macosx/platform-tools
 $HOME/bin
+$HOME/bin/adb
 $HOME/go/bin
 /usr/local/mysql/bin
 /usr/local/share/npm/bin
@@ -25,3 +26,4 @@ $HOME/esp/xtensa-esp32-elf/bin
 $HOME/.rvm/bin # Add RVM to PATH for scripting
 $HOME/bin/gcc-arm/bin
 $HOME/.local/bin
+$HOME/.deno/bin

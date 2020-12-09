@@ -56,7 +56,7 @@ done
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(git node npm github git-open brew sublime heroku z zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git node npm github brew sublime heroku z zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -77,6 +77,3 @@ export NVM_DIR="/Users/remy/.nvm"
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"

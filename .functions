@@ -330,7 +330,7 @@ copy() {
 
 # I'm going to lose the original `split` command, but frankly, I never
 # use it (last I recall was 2007...)
-function split() {
+function trsplit() {
   tr '$@' '\n' < /dev/stdin
 }
 
